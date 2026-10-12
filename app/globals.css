@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
+/*
+ * As cores são variáveis trocadas pelo tema. Os componentes usam só as classes
+ * dos tokens (bg-fundo, text-texto...), sem a variante dark:.
+ * Os dois blocos do tema escuro precisam ficar iguais.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  color-scheme: light;
+  --fundo: #faf8f5;
+  --superficie: #ffffff;
+  --texto: #1d1b18;
+  --texto-suave: #5d574e;
+  --borda: #d8d2c8;
+  --borda-forte: #857d71;
+  --destaque: #8a5a00;
+  --sobre-destaque: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="claro"]) {
+    color-scheme: dark;
+    --fundo: #121214;
+    --superficie: #1c1c20;
+    --texto: #f2f1ee;
+    --texto-suave: #aaa69f;
+    --borda: #34343a;
+    --borda-forte: #807c75;
+    --destaque: #f5c451;
+    --sobre-destaque: #1a1400;
   }
 }
 
+:root[data-theme="escuro"] {
+  color-scheme: dark;
+  --fundo: #121214;
+  --superficie: #1c1c20;
+  --texto: #f2f1ee;
+  --texto-suave: #aaa69f;
+  --borda: #34343a;
+  --borda-forte: #807c75;
+  --destaque: #f5c451;
+  --sobre-destaque: #1a1400;
+}
+
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-texto: var(--texto);
+  --color-texto-suave: var(--texto-suave);
+  --color-borda: var(--borda);
+  --color-borda-forte: var(--borda-forte);
+  --color-destaque: var(--destaque);
+  --color-sobre-destaque: var(--sobre-destaque);
+  --font-sans: var(--font-geist-sans);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+:focus-visible {
+  outline: 2px solid var(--destaque);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
