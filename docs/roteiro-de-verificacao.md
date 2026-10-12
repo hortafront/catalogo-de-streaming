@@ -15,7 +15,7 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] Cada filtro (serviço, gênero, tipo, ano, nota, ordenação) muda a grade e a URL
 - [ ] Uma URL com filtros aberta em outra aba mostra os mesmos resultados
 - [ ] O botão voltar desfaz o último filtro
-- [ ] "Limpar filtros" volta a URL para `/`
+- [ ] "Limpar filtros" volta a URL para `/explorar`
 - [ ] Uma combinação sem resultado mostra a mensagem de lista vazia
 - [ ] A busca por nome mostra resultados; uma busca sem resultado mostra a mensagem
 - [ ] A página de detalhes mostra sinopse, elenco, trailer e onde assistir
@@ -26,7 +26,7 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 
 ## Tema
 
-- [ ] Sem escolha salva, o site segue o tema do sistema
+- [ ] Sem escolha salva, o site abre no tema escuro
 - [ ] O botão alterna o tema e a escolha sobrevive a recarregar, sem piscar
 
 ## Celular (375px)

@@ -3,7 +3,9 @@ import Link from "next/link";
 export default function NaoEncontrado() {
   return (
     <div className="py-16 text-center">
-      <h1 className="text-2xl font-bold">Página não encontrada</h1>
+      <h1 className="cartaz text-4xl leading-none sm:text-5xl">
+        Página não encontrada
+      </h1>
       <p className="mt-2 text-texto-suave">
         O filme ou a página que você procura não existe.
       </p>

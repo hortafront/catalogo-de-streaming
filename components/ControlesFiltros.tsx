@@ -20,7 +20,7 @@ const SERVICOS_VISIVEIS = 12;
 const NOTAS = [0, 5, 6, 7, 8, 9];
 
 const CLASSES_CAMPO =
-  "rounded-lg border border-borda-forte bg-superficie px-3 py-2";
+  "rounded-lg border border-borda-forte bg-fundo px-3 py-2";
 const CLASSES_ROTULO = "mb-1 block text-sm font-medium";
 
 function alternarId(lista: number[], id: number): number[] {
@@ -30,7 +30,7 @@ function alternarId(lista: number[], id: number): number[] {
 function classesEtiqueta(ativa: boolean): string {
   return ativa
     ? "rounded-full border border-destaque bg-destaque px-3 py-1 text-sm font-medium text-sobre-destaque"
-    : "rounded-full border border-borda-forte bg-superficie px-3 py-1 text-sm";
+    : "rounded-full border border-borda-forte bg-fundo px-3 py-1 text-sm";
 }
 
 function CampoAno({

@@ -15,12 +15,9 @@ function temaSalvo(): Tema | null {
   }
 }
 
+// Sem escolha salva, o site é escuro.
 function temaAtual(): Tema {
-  const definido = document.documentElement.dataset.theme;
-  if (definido === "claro" || definido === "escuro") return definido;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "escuro"
-    : "claro";
+  return document.documentElement.dataset.theme === "claro" ? "claro" : "escuro";
 }
 
 function alternarTema() {
@@ -46,7 +43,7 @@ export function BotaoTema() {
       type="button"
       onClick={alternarTema}
       aria-label="Alternar entre tema claro e escuro"
-      className="grid size-10 place-items-center rounded-full border border-borda-forte hover:bg-superficie"
+      className="grid size-10 place-items-center rounded-full border border-borda text-texto-suave hover:border-borda-forte hover:text-texto"
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5">
         <circle

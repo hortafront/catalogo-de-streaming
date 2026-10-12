@@ -3,44 +3,30 @@
 /*
  * As cores são variáveis trocadas pelo tema. Os componentes usam só as classes
  * dos tokens (bg-fundo, text-texto...), sem a variante dark:.
- * Os dois blocos do tema escuro precisam ficar iguais.
+ * O tema escuro é o padrão; o claro só entra quando a pessoa escolhe no botão.
  */
 :root {
+  color-scheme: dark;
+  --fundo: #0e0d13;
+  --superficie: #1a1822;
+  --texto: #f4efe6;
+  --texto-suave: #a9a3b3;
+  --borda: #2c2937;
+  --borda-forte: #6f6a7c;
+  --destaque: #ffc247;
+  --sobre-destaque: #1a1400;
+}
+
+:root[data-theme="claro"] {
   color-scheme: light;
-  --fundo: #faf8f5;
+  --fundo: #f3f1f6;
   --superficie: #ffffff;
-  --texto: #1d1b18;
-  --texto-suave: #5d574e;
-  --borda: #d8d2c8;
-  --borda-forte: #857d71;
+  --texto: #17151d;
+  --texto-suave: #5b5666;
+  --borda: #d9d5e0;
+  --borda-forte: #827c8e;
   --destaque: #8a5a00;
   --sobre-destaque: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="claro"]) {
-    color-scheme: dark;
-    --fundo: #121214;
-    --superficie: #1c1c20;
-    --texto: #f2f1ee;
-    --texto-suave: #aaa69f;
-    --borda: #34343a;
-    --borda-forte: #807c75;
-    --destaque: #f5c451;
-    --sobre-destaque: #1a1400;
-  }
-}
-
-:root[data-theme="escuro"] {
-  color-scheme: dark;
-  --fundo: #121214;
-  --superficie: #1c1c20;
-  --texto: #f2f1ee;
-  --texto-suave: #aaa69f;
-  --borda: #34343a;
-  --borda-forte: #807c75;
-  --destaque: #f5c451;
-  --sobre-destaque: #1a1400;
 }
 
 @theme inline {
@@ -52,7 +38,20 @@
   --color-borda-forte: var(--borda-forte);
   --color-destaque: var(--destaque);
   --color-sobre-destaque: var(--sobre-destaque);
-  --font-sans: var(--font-geist-sans);
+  /* Sala e tela não mudam com o tema: são as cores do texto sobre as fotos. */
+  --color-sala: #0e0d13;
+  --color-tela: #f4efe6;
+  --font-sans: var(--font-archivo);
+}
+
+@theme {
+  --animate-surgir: surgir 0.6s ease-out both;
+
+  @keyframes surgir {
+    from {
+      opacity: 0;
+    }
+  }
 }
 
 body {
@@ -63,6 +62,34 @@ body {
 :focus-visible {
   outline: 2px solid var(--destaque);
   outline-offset: 2px;
+}
+
+@layer components {
+  /* Letra de cartaz: a mesma família do texto, estreita e pesada. */
+  .cartaz {
+    font-stretch: 62%;
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Largura e margem lateral da página. */
+@utility faixa {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 96rem;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+@utility sem-barra {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

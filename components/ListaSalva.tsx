@@ -13,7 +13,7 @@ export function ListaSalva() {
       <div className="py-12 text-center">
         <p>Sua lista está vazia.</p>
         <Link
-          href="/"
+          href="/explorar"
           className="mt-4 inline-block rounded-full bg-destaque px-5 py-2 font-medium text-sobre-destaque"
         >
           Explorar o catálogo

@@ -21,7 +21,7 @@ async function Conteudo({ searchParams }: Pick<Props, "searchParams">) {
   if (!q) {
     return (
       <>
-        <h1 className="text-2xl font-bold">Busca</h1>
+        <h1 className="cartaz mt-4 text-4xl leading-none sm:text-5xl">Busca</h1>
         <p className="mt-2 text-texto-suave">
           Digite o nome de um filme no campo de busca acima.
         </p>

@@ -6,8 +6,10 @@ export const metadata: Metadata = { title: "Minha lista" };
 export default function PaginaMinhaLista() {
   return (
     <>
-      <h1 className="text-2xl font-bold">Minha lista</h1>
-      <p className="mb-6 mt-1 text-sm text-texto-suave">
+      <h1 className="cartaz mt-4 text-4xl leading-none sm:text-5xl">
+        Minha lista
+      </h1>
+      <p className="mb-6 mt-2 max-w-prose text-sm text-texto-suave">
         A lista fica guardada só neste navegador. Ela não aparece em outros
         aparelhos e some se os dados do site forem apagados.
       </p>

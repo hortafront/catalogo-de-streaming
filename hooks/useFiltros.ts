@@ -23,7 +23,9 @@ export function useFiltros() {
   const aplicar = useCallback(
     (novos: Filtros) => {
       const consulta = escreverFiltros(novos).toString();
-      router.push(consulta ? `/?${consulta}` : "/", { scroll: false });
+      router.push(consulta ? `/explorar?${consulta}` : "/explorar", {
+        scroll: false,
+      });
     },
     [router],
   );

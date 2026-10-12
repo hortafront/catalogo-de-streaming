@@ -8,8 +8,10 @@ export function ResultadoBusca({ q }: { q: string }) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">Resultados para “{q}”</h1>
-      <p className="mb-4 mt-1 text-sm text-texto-suave">
+      <h1 className="cartaz mt-4 text-4xl leading-none sm:text-5xl">
+        Resultados para “{q}”
+      </h1>
+      <p className="mb-6 mt-2 text-sm text-texto-suave">
         A busca mostra qualquer filme. A página de cada um informa se ele está
         em algum streaming no Brasil.
       </p>

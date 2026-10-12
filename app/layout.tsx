@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { Cabecalho } from "@/components/Cabecalho";
 import { Rodape } from "@/components/Rodape";
 import { Provedores } from "./provedores";
 import "./globals.css";
 
-const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+// O eixo de largura (wdth) é o que permite a letra estreita dos títulos.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +26,7 @@ const SCRIPT_TEMA = `(function(){try{var t=localStorage.getItem("catalogo:tema")
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={geist.variable} suppressHydrationWarning>
+    <html lang="pt-BR" className={archivo.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
       </head>
@@ -34,7 +39,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
         </a>
         <Provedores>
           <Cabecalho />
-          <main id="conteudo" className="mx-auto w-full max-w-7xl flex-1 px-4 py-6">
+          <main id="conteudo" className="faixa flex-1 pb-16 pt-2">
             {children}
           </main>
           <Rodape />

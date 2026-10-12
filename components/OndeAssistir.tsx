@@ -34,7 +34,7 @@ export function OndeAssistir({
                   return (
                     <li
                       key={servico.id}
-                      className="flex items-center gap-2 rounded-lg border border-borda bg-superficie px-3 py-2"
+                      className="flex items-center gap-2 rounded-lg border border-borda bg-fundo px-3 py-2"
                     >
                       {logo && (
                         <Image

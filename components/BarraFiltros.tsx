@@ -11,7 +11,7 @@ export function BarraFiltros() {
 
   return (
     <section aria-label="Filtros" className="mb-6">
-      <div className="hidden md:block">
+      <div className="hidden rounded-2xl border border-borda bg-superficie p-6 md:block">
         <ControlesFiltros />
       </div>
 
