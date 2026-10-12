@@ -2102,7 +2102,7 @@ Abra `http://localhost:3000/?ordem=lancamento&tipo=free` e role algumas páginas
 
 1. Carregue o catálogo, depois marque "Offline" na aba Network do DevTools e role até o fim. Expected: os filmes carregados continuam, aparece "Não foi possível carregar mais filmes." com "Tentar de novo", e a aba Network não mostra chamadas repetidas a `/api/filmes` sem parar.
 2. Desmarque "Offline" e clique em "Tentar de novo". Expected: a próxima página carrega.
-3. Com "Offline" marcado, recarregue a página (com o cache do navegador desativado). Expected ao voltar online e recarregar com `/api/filmes` bloqueado em "Network request blocking": mensagem de erro com "Tentar de novo" no lugar da grade.
+3. No DevTools, abra "Network request blocking", bloqueie `*/api/filmes*` e recarregue a página. Expected: mensagem de erro com "Tentar de novo" no lugar da grade. Remova o bloqueio e clique em "Tentar de novo": a grade carrega.
 
 - [ ] **Step 13: Commit**
 
