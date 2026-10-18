@@ -2,17 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMinhaLista } from "@/hooks/useMinhaLista";
 
 const PAGINAS = [
   { href: "/", nome: "Início" },
   { href: "/explorar", nome: "Explorar" },
-  { href: "/minha-lista", nome: "Minha lista" },
 ];
 
 function Itens({ rota }: { rota: string | null }) {
-  const { lista } = useMinhaLista();
-
   return (
     <nav aria-label="Principal">
       <ul className="sem-barra flex gap-1 overflow-x-auto">
@@ -30,12 +26,6 @@ function Itens({ rota }: { rota: string | null }) {
                 }`}
               >
                 {nome}
-                {href === "/minha-lista" && lista.length > 0 && (
-                  <span className="ml-2 rounded-full bg-destaque px-2 py-0.5 text-sm text-sobre-destaque">
-                    {lista.length}
-                    <span className="sr-only"> filmes salvos</span>
-                  </span>
-                )}
               </Link>
             </li>
           );

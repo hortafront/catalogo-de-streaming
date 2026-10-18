@@ -1,10 +1,10 @@
 # Catálogo de Streaming
 
-Os filmes disponíveis agora nos serviços de streaming do Brasil, com filtros por serviço, tipo, gênero, ano e nota, busca por nome e uma lista "quero ver".
+Os filmes disponíveis agora nos serviços de streaming do Brasil, com filtros por serviço, tipo, gênero, ano e nota, busca por nome e, com uma conta, duas listas: "Quero assistir" e "Já assisti".
 
 ## Tecnologias
 
-Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tailwind CSS 4 e TanStack Query. Dados do TMDB.
+Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tailwind CSS 4, TanStack Query e Supabase (login e banco). Dados do TMDB.
 
 ## Como rodar
 
@@ -37,7 +37,8 @@ Outros comandos: `npm test`, `npm run typecheck`, `npm run lint` e `npm run buil
 - **Rolagem infinita com alternativa.** As páginas carregam ao chegar ao fim da grade, e o botão "Carregar mais" atende quem navega por teclado.
 - **Só `lib/tmdb/` conhece o formato do TMDB.** O resto do app usa tipos próprios, então uma mudança na API afeta um lugar só.
 - **Cache em duas camadas.** As consultas ao TMDB usam `use cache` (1 hora para filmes, 1 dia para serviços e gêneros), e as respostas das rotas levam `Cache-Control` para a CDN. Falhas do TMDB não ficam em cache.
-- **A lista "quero ver" fica no `localStorage`.** Não há contas. Se o armazenamento falhar, o site continua funcionando.
+- **As listas ficam no Supabase, protegidas por RLS.** O navegador lê e grava direto na tabela `filmes_marcados`; as regras do banco só deixam cada usuário ver e alterar as próprias linhas. A sessão vive em cookie e o `proxy.ts` a renova a cada requisição.
+- **Marcar responde na hora.** As gravações são otimistas e vão para o banco em fila, na ordem dos cliques; se uma falhar, a tela volta ao estado anterior e avisa.
 - **Dois temas com variáveis CSS.** Um script no `<head>` aplica o tema salvo antes da primeira pintura.
 
 ## Limites conhecidos
