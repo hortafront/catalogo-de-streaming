@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { useFilme } from "@/hooks/useFilme";
 import { ErroApi } from "@/lib/buscarJson";
 import { urlImagem } from "@/lib/config";
-import { BotaoLista } from "./BotaoLista";
+import { BotoesMarcacao } from "./BotoesMarcacao";
 import { FatosFilme } from "./FatosFilme";
 import { OndeAssistir } from "./OndeAssistir";
 import { Palco } from "./Palco";
@@ -71,7 +71,7 @@ export function DetalheFilme({ id }: { id: number }) {
               nota={filme.nota}
             />
             <div className="mt-5">
-              <BotaoLista filme={filme} comTexto sobreImagem />
+              <BotoesMarcacao filme={filme} comTexto sobreImagem />
             </div>
           </header>
         </div>

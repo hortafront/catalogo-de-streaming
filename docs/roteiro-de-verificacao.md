@@ -7,6 +7,41 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] `npm run typecheck` sem erros
 - [ ] `npm run lint` sem erros
 - [ ] `npm run build` sem erros
+- [ ] `npm test` sem falhas
+
+## Conta
+
+- [ ] Deslogado, o cabeçalho mostra "Entrar"
+- [ ] Criar conta com senha de 5 caracteres é barrado pelo navegador
+- [ ] Criar conta com senha válida leva para `/` e o cabeçalho mostra o email sem recarregar
+- [ ] "Sair" volta o cabeçalho para "Entrar"
+- [ ] Senha errada mostra "Email ou senha incorretos."
+- [ ] Criar conta com um email já usado mostra "Esse email já tem conta."
+- [ ] Logado, `/entrar` redireciona para `/`
+- [ ] `/entrar?voltar=//evil.com` e `/entrar?voltar=%2F%09%2Fevil.com`: depois de entrar, cai em `/`
+- [ ] Logado em duas abas, "Sair" na segunda: ao voltar para a primeira, o cabeçalho mostra "Entrar"
+
+## Marcações
+
+- [ ] Deslogado, o marcador de um cartão leva para `/entrar?voltar=%2F`; depois de entrar, volta para `/`
+- [ ] Em `/filme/603`, "Quero assistir" fica pressionado na hora e continua assim depois de recarregar
+- [ ] "Já assisti" troca de lista: ele fica pressionado, "Quero assistir" solta, e a linha no Supabase tem `estado = assistido`
+- [ ] Clicar de novo no estado ativo desmarca, e a linha some da tabela
+- [ ] Offline (DevTools → Network), marcar desfaz e mostra "Não foi possível salvar. Tente de novo.", que some em cerca de 4 s
+- [ ] Cinco cliques rápidos em "Quero assistir" terminam pressionado, e continua assim depois de recarregar
+
+## Abas e listas
+
+- [ ] `/` abre na aba Catálogo, com o destaque e as fileiras
+- [ ] "Quero assistir" muda a URL para `/?aba=quero-assistir` e mostra a grade; o botão voltar retorna ao Catálogo
+- [ ] `/?aba=xyz` mostra o Catálogo
+- [ ] Com Tab na aba ativa, as setas movem o foco e o Enter troca de aba
+- [ ] `/minha-lista` redireciona para `/?aba=quero-assistir`
+- [ ] Deslogado, "Já assisti" mostra "Entre para montar suas listas."; depois de entrar, volta para `/?aba=assistidos`
+- [ ] Conta A com 2 em "Quero assistir" e 1 em "Já assisti": as abas mostram (2) e (1)
+- [ ] Sair e entrar com a conta B na mesma aba, sem recarregar: as listas aparecem vazias desde o primeiro quadro
+- [ ] RLS: no SQL Editor, personificando B, `select * from filmes_marcados;` volta 0 linhas; personificando A, 3; como B, `update filmes_marcados set estado = 'assistido';` afeta 0 linhas
+- [ ] Um filme sem pôster marcado aparece na aba com o pôster padrão e "Ano desconhecido"
 
 ## Fluxos
 
@@ -21,7 +56,6 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] A página de detalhes mostra sinopse, elenco, trailer e onde assistir
 - [ ] Um filme sem streaming no Brasil mostra "Indisponível no Brasil no momento."
 - [ ] `/filme/abc` e `/filme/999999999` mostram a página 404
-- [ ] Adicionar e remover da lista atualiza o contador; a lista sobrevive a recarregar
 - [ ] O rodapé credita o TMDB e o JustWatch
 
 ## Tema
@@ -40,17 +74,17 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] Tab percorre tudo em ordem lógica, com foco sempre visível
 - [ ] "Pular para o conteúdo" é o primeiro foco e funciona
 - [ ] No painel de filtros, o foco fica preso e Esc fecha
-- [ ] Com NVDA ou Narrador: os cartões anunciam título, ano e nota; os botões da lista anunciam o nome do filme e o estado; novos filmes carregados são anunciados
+- [ ] Com NVDA ou Narrador: os cartões anunciam título, ano e nota; os botões de marcação anunciam o nome do filme e o estado; novos filmes carregados são anunciados
 
 ## Falhas
 
 - [ ] `/?tipo=xyz&anoDe=abc` abre o catálogo com os valores padrão
 - [ ] Offline durante a rolagem: os filmes carregados continuam e aparece "Tentar de novo"
-- [ ] `localStorage` com lixo em `catalogo:minha-lista`: o site abre com a lista vazia
+- [ ] Sem as variáveis do Supabase: o catálogo abre normalmente; as abas de lista e `/entrar` mostram "Login indisponível: configure o Supabase."
 - [ ] Sem `TMDB_API_TOKEN`: as rotas respondem 500 e a tela mostra a mensagem de erro
 
 ## Lighthouse (aba anônima, modo celular)
 
-- [ ] Acessibilidade: 95 ou mais em `/`, `/filme/603` e `/minha-lista`
+- [ ] Acessibilidade: 95 ou mais em `/`, `/filme/603` e `/?aba=quero-assistir`
 - [ ] Desempenho: anote a nota de `/` e de `/filme/603`
 - [ ] Contraste: nenhum aviso nos dois temas

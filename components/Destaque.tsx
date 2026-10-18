@@ -9,7 +9,7 @@ import { urlImagem } from "@/lib/config";
 import { FILTROS_PADRAO } from "@/lib/filtros/filtros";
 import { juntarPaginas } from "@/lib/paginas";
 import type { Filme } from "@/lib/tipos";
-import { BotaoLista } from "./BotaoLista";
+import { BotoesMarcacao } from "./BotoesMarcacao";
 import { FatosFilme } from "./FatosFilme";
 import { Palco } from "./Palco";
 
@@ -62,7 +62,7 @@ function Cena({
               >
                 Ver onde assistir
               </Link>
-              <BotaoLista filme={filme} comTexto sobreImagem />
+              <BotoesMarcacao filme={filme} comTexto sobreImagem />
             </div>
           </div>
 
