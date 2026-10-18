@@ -7,6 +7,18 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] `npm run typecheck` sem erros
 - [ ] `npm run lint` sem erros
 - [ ] `npm run build` sem erros
+- [ ] `npm test` sem falhas
+
+## Conta
+
+- [ ] Deslogado, o cabeçalho mostra "Entrar"
+- [ ] Criar conta com senha de 5 caracteres é barrado pelo navegador
+- [ ] Criar conta com senha válida leva para `/` e o cabeçalho mostra o email sem recarregar
+- [ ] "Sair" volta o cabeçalho para "Entrar"
+- [ ] Senha errada mostra "Email ou senha incorretos."
+- [ ] Criar conta com um email já usado mostra "Esse email já tem conta."
+- [ ] Logado, `/entrar` redireciona para `/`
+- [ ] `/entrar?voltar=//evil.com`: depois de entrar, cai em `/`
 
 ## Fluxos
 

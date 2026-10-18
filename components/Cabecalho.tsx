@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { BotaoTema } from "./BotaoTema";
 import { CampoBusca } from "./CampoBusca";
+import { MenuConta } from "./MenuConta";
 import { Navegacao, NavegacaoSemRota } from "./Navegacao";
 
 export function Cabecalho() {
@@ -11,7 +12,10 @@ export function Cabecalho() {
         <Link href="/" className="cartaz text-2xl leading-none text-destaque">
           Catálogo de Streaming
         </Link>
-        <div className="order-2 ml-auto md:order-4 md:ml-0">
+        <div className="order-2 ml-auto flex items-center gap-1 md:order-4 md:ml-0">
+          <Suspense fallback={<div className="w-16" />}>
+            <MenuConta />
+          </Suspense>
           <BotaoTema />
         </div>
         <div className="order-3 w-full md:order-2 md:w-auto">

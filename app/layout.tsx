@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import { Cabecalho } from "@/components/Cabecalho";
+import { ProvedorSessao } from "@/components/ProvedorSessao";
 import { Rodape } from "@/components/Rodape";
+import { obterUsuario } from "@/lib/supabase/sessao";
 import { Provedores } from "./provedores";
 import "./globals.css";
 
@@ -25,6 +27,9 @@ export const metadata: Metadata = {
 const SCRIPT_TEMA = `(function(){try{var t=localStorage.getItem("catalogo:tema");if(t==="claro"||t==="escuro"){document.documentElement.dataset.theme=t}}catch(e){}})()`;
 
 export default function Layout({ children }: LayoutProps<"/">) {
+  // Sem await: quem precisa do usuário lê a promise dentro de um <Suspense>.
+  const usuario = obterUsuario();
+
   return (
     <html lang="pt-BR" className={archivo.variable} suppressHydrationWarning>
       <head>
@@ -38,11 +43,13 @@ export default function Layout({ children }: LayoutProps<"/">) {
           Pular para o conteúdo
         </a>
         <Provedores>
-          <Cabecalho />
-          <main id="conteudo" className="faixa flex-1 pb-16 pt-2">
-            {children}
-          </main>
-          <Rodape />
+          <ProvedorSessao usuario={usuario}>
+            <Cabecalho />
+            <main id="conteudo" className="faixa flex-1 pb-16 pt-2">
+              {children}
+            </main>
+            <Rodape />
+          </ProvedorSessao>
         </Provedores>
       </body>
     </html>
