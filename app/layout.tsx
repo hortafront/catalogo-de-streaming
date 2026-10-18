@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
+import { Aviso } from "@/components/Aviso";
 import { Cabecalho } from "@/components/Cabecalho";
 import { ProvedorSessao } from "@/components/ProvedorSessao";
 import { Rodape } from "@/components/Rodape";
@@ -49,6 +50,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
               {children}
             </main>
             <Rodape />
+            <Aviso />
           </ProvedorSessao>
         </Provedores>
       </body>

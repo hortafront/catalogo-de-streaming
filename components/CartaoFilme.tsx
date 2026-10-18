@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Filme } from "@/lib/tipos";
-import { BotaoLista } from "./BotaoLista";
+import { BotoesMarcacao } from "./BotoesMarcacao";
 import { Poster } from "./Poster";
 
 export function CartaoFilme({
@@ -31,7 +31,7 @@ export function CartaoFilme({
       </Link>
       {/* Fora do link: um elemento interativo não pode ficar dentro de outro. */}
       <div className="absolute right-2 top-2">
-        <BotaoLista filme={filme} />
+        <BotoesMarcacao filme={filme} />
       </div>
     </li>
   );

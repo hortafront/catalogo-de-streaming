@@ -20,6 +20,15 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] Logado, `/entrar` redireciona para `/`
 - [ ] `/entrar?voltar=//evil.com`: depois de entrar, cai em `/`
 
+## Marcações
+
+- [ ] Deslogado, o marcador de um cartão leva para `/entrar?voltar=%2F`; depois de entrar, volta para `/`
+- [ ] Em `/filme/603`, "Quero assistir" fica pressionado na hora e continua assim depois de recarregar
+- [ ] "Já assisti" troca de lista: ele fica pressionado, "Quero assistir" solta, e a linha no Supabase tem `estado = assistido`
+- [ ] Clicar de novo no estado ativo desmarca, e a linha some da tabela
+- [ ] Offline (DevTools → Network), marcar desfaz e mostra "Não foi possível salvar. Tente de novo.", que some em cerca de 4 s
+- [ ] Cinco cliques rápidos em "Quero assistir" terminam pressionado, e continua assim depois de recarregar
+
 ## Fluxos
 
 - [ ] O catálogo abre com filmes por assinatura, ordenados por popularidade
