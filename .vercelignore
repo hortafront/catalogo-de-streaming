@@ -1,0 +1,7 @@
+# A CLI da Vercel não lê o .gitignore: sem isto, `vercel deploy` enviaria os
+# segredos locais.
+.env*
+!.env.example
+node_modules
+.next
+.superpowers
