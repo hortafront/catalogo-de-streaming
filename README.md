@@ -10,7 +10,8 @@ Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tailwind CSS 4 
 
 1. Crie uma conta no [TMDB](https://www.themoviedb.org/) e copie o "API Read Access Token" em Configurações → API.
 2. Copie `.env.example` para `.env.local` e preencha `TMDB_API_TOKEN`.
-3. Rode:
+3. Configure o Supabase (abaixo) para ter login e listas. Sem ele o catálogo funciona, mas sem contas.
+4. Rode:
 
 ```bash
 npm install
@@ -19,7 +20,15 @@ npm run dev
 
 O site abre em http://localhost:3000.
 
-Outros comandos: `npm run typecheck`, `npm run lint` e `npm run build`.
+Outros comandos: `npm test`, `npm run typecheck`, `npm run lint` e `npm run build`.
+
+## Configurar o Supabase
+
+1. Crie um projeto em [supabase.com](https://supabase.com) (o plano gratuito basta).
+2. Em Authentication → Sign In / Providers → Email, deixe o email ligado e desligue **Confirm email**.
+3. No SQL Editor, cole e rode [`supabase/esquema.sql`](supabase/esquema.sql).
+4. Em Project Settings → API Keys, copie a URL e a publishable key para `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` no `.env.local`. Nunca use a secret key.
+5. Na Vercel, adicione as mesmas duas variáveis.
 
 ## Decisões técnicas
 
@@ -36,7 +45,7 @@ Outros comandos: `npm run typecheck`, `npm run lint` e `npm run build`.
 - A busca por nome mostra qualquer filme, porque o TMDB não filtra a busca por streaming. A página de detalhes informa a disponibilidade.
 - O TMDB entrega até 10.000 filmes por consulta.
 - A disponibilidade pode estar algumas horas desatualizada.
-- O projeto não tem testes automatizados. A verificação manual está em [docs/roteiro-de-verificacao.md](docs/roteiro-de-verificacao.md).
+- Os testes automatizados cobrem só as funções puras (`npm test`). O resto é verificado à mão com [docs/roteiro-de-verificacao.md](docs/roteiro-de-verificacao.md).
 
 ## Créditos
 
