@@ -37,7 +37,10 @@ supabase/esquema.sql             tabela, índice e regras RLS; colado no SQL Edi
 lib/supabase/config.ts           lê NEXT_PUBLIC_SUPABASE_URL e _PUBLISHABLE_KEY; diz se está configurado
 lib/supabase/navegador.ts        createBrowserClient (instância única)
 lib/supabase/servidor.ts         createServerClient com cookies() do Next
-lib/auth/caminhoSeguro.ts        valida o parâmetro ?voltar=
+lib/supabase/sessao.ts           obterUsuario(): usuário da requisição (React cache)
+lib/auth/caminhoSeguro.ts        valida o parâmetro ?voltar= e monta o link /entrar?voltar=
+hooks/useAviso.ts                aviso curto global (some sozinho)
+components/Aviso.tsx             região role="status" que mostra o aviso
 lib/auth/mensagens.ts            mensagemErroAuth(erro): texto em português
 lib/abas.ts                      lerAba(param): "catalogo" | "quero-assistir" | "assistidos"
 app/entrar/page.tsx              formulário de entrar / criar conta
@@ -54,7 +57,7 @@ hooks/useMarcacoes.ts            substitui useMinhaLista
 
 - `app/layout.tsx`: busca o usuário com `getUser()` no servidor e envolve o app em `ProvedorSessao`.
 - `app/page.tsx`: lê `?aba=` e mostra o catálogo atual ou uma `ListaMarcada`.
-- `app/minha-lista/page.tsx`: vira `redirect("/?aba=quero-assistir")`.
+- `app/minha-lista/`: removida; `next.config.ts` ganha `redirects()` de `/minha-lista` para `/?aba=quero-assistir` (não permanente).
 - `components/Cabecalho.tsx`: inclui `MenuConta`.
 - `components/Navegacao.tsx`: remove "Minha lista" e o contador.
 - `components/CartaoFilme.tsx`, `components/Destaque.tsx`, `components/DetalheFilme.tsx`: trocam `BotaoLista` por `BotoesMarcacao`.
@@ -62,7 +65,7 @@ hooks/useMarcacoes.ts            substitui useMinhaLista
 
 ### Arquivos removidos
 
-`hooks/useMinhaLista.ts`, `components/BotaoLista.tsx`, `components/ListaSalva.tsx`.
+`hooks/useMinhaLista.ts`, `components/BotaoLista.tsx`, `components/ListaSalva.tsx`, `app/minha-lista/page.tsx`.
 
 ### Dependências novas
 
@@ -99,7 +102,7 @@ Variáveis de ambiente: `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLI
   - Quem já está logado e abre `/entrar` é redirecionado para `/`.
 - **`caminhoSeguro(voltar)`** aceita só caminhos que começam com `/`, sem `//` nem `/\` no começo. Qualquer outro valor vira `/`.
 - **`sair`** chama `signOut` e redireciona para `/`. No cliente, o `ProvedorSessao` recebe o evento de saída e remove as consultas `["marcacoes", ...]` do React Query.
-- **`ProvedorSessao`** recebe o usuário inicial do `layout.tsx` (assim o cabeçalho não pisca) e se mantém atualizado com `onAuthStateChange`. Expõe `{ usuario, configurado }`.
+- **`ProvedorSessao`**: o projeto usa `cacheComponents: true`, então o layout não pode ler cookies fora de um `<Suspense>`. O `layout.tsx` chama `obterUsuario()` **sem `await`** e passa a promise ao provedor, como no guia "Using React's `use` within a Context Provider" do Next. O hook `useSessao()` resolve a promise com `use()`, e por isso todo componente que o usa fica dentro de um `<Suspense>`. A fonte da verdade é o servidor. Quando `onAuthStateChange` informa que o usuário mudou (expirou, saiu em outra aba), o provedor chama `router.refresh()`, e o layout entrega uma promise nova. Quando o usuário passa a ser `null`, o provedor remove as consultas `["marcacoes"]`. Expõe `{ usuario, configurado }`.
 - **`MenuConta`** mostra o link "Entrar" para quem não está logado e, para quem está, o email e um botão "Sair" (um `form` com a action `sair`).
 
 ## Marcações
@@ -161,7 +164,8 @@ useMarcacoes(): {
 - **Vitest** só para as funções puras, em `lib/**/*.test.ts`, com o script `npm test`:
   - `caminhoSeguro`: aceita `/`, `/filme/603` e `/?aba=assistidos`; rejeita `//evil.com`, `/\evil.com`, `https://evil.com`, `javascript:alert(1)`, string vazia e `null`.
   - `lerAba`: os três valores válidos, mais `undefined`, `""` e `"xyz"` (que viram `"catalogo"`).
-  - `mensagemErroAuth`: cada código conhecido do Supabase (`invalid_credentials`, `user_already_exists`, `weak_password`) e um código desconhecido.
+  - `linkEntrar`: codifica o caminho de volta (`/?aba=assistidos` → `/entrar?voltar=%2F%3Faba%3Dassistidos`).
+  - `mensagemErroAuth`: cada código conhecido do Supabase (`invalid_credentials`, `user_already_exists`, `email_exists`, `weak_password`) e um código desconhecido.
 - **Antes de cada commit:** `npm run typecheck`, `npm run lint`, `npm test`. Antes de terminar: `npm run build`.
 - **Roteiro manual** (adicionado a `docs/roteiro-de-verificacao.md`):
   - criar conta, sair, entrar de novo;
@@ -170,7 +174,7 @@ useMarcacoes(): {
   - marcar, trocar de lista, desmarcar e recarregar para conferir que persistiu;
   - abas: `?aba=xyz` cai em Catálogo; o botão voltar troca de aba; as setas do teclado funcionam;
   - `/minha-lista` redireciona para `/?aba=quero-assistir`;
-  - RLS: com a conta A marque filmes; com a conta B confirme que as listas estão vazias; no console da conta B, um `select` sem filtro em `filmes_marcados` não retorna as linhas da A;
+  - RLS: com a conta A marque filmes; com a conta B confirme que as listas estão vazias; no SQL Editor, personificando o usuário B, um `select` sem filtro em `filmes_marcados` não retorna as linhas da A;
   - sem variáveis do Supabase, o catálogo abre normalmente.
 
 ## Configuração do Supabase (passo a passo para o README)
