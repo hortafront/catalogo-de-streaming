@@ -12,6 +12,10 @@ create table public.filmes_marcados (
   primary key (usuario_id, filme_id)
 );
 
+-- Projetos novos podem não expor tabelas novas à API; o RLS abaixo continua
+-- limitando cada usuário às próprias linhas.
+grant select, insert, update, delete on public.filmes_marcados to authenticated;
+
 alter table public.filmes_marcados enable row level security;
 
 create policy "ler as proprias marcacoes" on public.filmes_marcados

@@ -12,6 +12,10 @@ describe("caminhoSeguro", () => {
     "https://evil.com",
     "javascript:alert(1)",
     "filme/603",
+    // O navegador descarta tab e quebra de linha: viraria "//evil.com".
+    "/\t/evil.com",
+    "/\n/evil.com",
+    "/\r/evil.com",
     "",
     null,
     undefined,

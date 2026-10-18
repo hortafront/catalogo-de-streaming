@@ -36,7 +36,19 @@ function Vigia() {
         if ((sessao?.user.id ?? null) !== id) router.refresh();
       },
     );
-    return () => data.subscription.unsubscribe();
+    // Sair em outra aba só apaga os cookies, sem evento aqui. Ao voltar para
+    // esta aba, confere a sessão que ficou nos cookies.
+    async function conferir() {
+      if (document.visibilityState !== "visible") return;
+      const { data: atual } = await clienteNavegador().auth.getSession();
+      if ((atual.session?.user.id ?? null) !== id) router.refresh();
+    }
+    document.addEventListener("visibilitychange", conferir);
+
+    return () => {
+      data.subscription.unsubscribe();
+      document.removeEventListener("visibilitychange", conferir);
+    };
   }, [id, router]);
 
   useEffect(() => {

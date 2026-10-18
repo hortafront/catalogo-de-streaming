@@ -1,9 +1,17 @@
-// Só caminhos deste site: "//x.com" e "/\x.com" o navegador trata como outro
-// domínio, então o ?voltar= viraria um redirecionamento para fora.
+const BASE = "http://local.invalid";
+
+// Só caminhos deste site. Em vez de olhar caractere por caractere, deixa o
+// parser de URL decidir: ele descarta tab e quebra de linha e trata "\" como
+// "/", então "/\t/x.com" e "/\x.com" virariam outro domínio.
 export function caminhoSeguro(valor: string | null | undefined): string {
   if (!valor || valor[0] !== "/") return "/";
-  if (valor[1] === "/" || valor[1] === "\\") return "/";
-  return valor;
+  try {
+    const url = new URL(valor, BASE);
+    if (url.origin !== BASE) return "/";
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return "/";
+  }
 }
 
 export function linkEntrar(caminho: string): string {

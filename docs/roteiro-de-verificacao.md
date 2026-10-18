@@ -18,7 +18,8 @@ Rode com `npm run build && npm run start` e marque cada item. Repita a seção "
 - [ ] Senha errada mostra "Email ou senha incorretos."
 - [ ] Criar conta com um email já usado mostra "Esse email já tem conta."
 - [ ] Logado, `/entrar` redireciona para `/`
-- [ ] `/entrar?voltar=//evil.com`: depois de entrar, cai em `/`
+- [ ] `/entrar?voltar=//evil.com` e `/entrar?voltar=%2F%09%2Fevil.com`: depois de entrar, cai em `/`
+- [ ] Logado em duas abas, "Sair" na segunda: ao voltar para a primeira, o cabeçalho mostra "Entrar"
 
 ## Marcações
 
