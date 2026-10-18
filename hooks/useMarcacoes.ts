@@ -12,6 +12,7 @@ import { clienteNavegador } from "@/lib/supabase/navegador";
 import {
   aplicar,
   deLinha,
+  desfazer,
   filtrar,
   type Alteracao,
   type Estado,
@@ -80,7 +81,7 @@ export function useMarcacoes() {
       return { anterior };
     },
     onError: (_erro, _alteracao, contexto) => {
-      queryClient.setQueryData(chave, contexto?.anterior);
+      desfazer(queryClient, chave, contexto?.anterior);
       avisar("Não foi possível salvar. Tente de novo.");
     },
     onSettled: () => {

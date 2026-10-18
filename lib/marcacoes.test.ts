@@ -1,5 +1,12 @@
+import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
-import { aplicar, deLinha, filtrar, type Marcacao } from "./marcacoes";
+import {
+  aplicar,
+  deLinha,
+  desfazer,
+  filtrar,
+  type Marcacao,
+} from "./marcacoes";
 
 const matrix = { id: 603, titulo: "Matrix", poster: "/m.jpg", ano: 1999, nota: 8.2 };
 const duna = { id: 438631, titulo: "Duna", poster: null, ano: null, nota: null };
@@ -51,5 +58,24 @@ describe("filtrar", () => {
     ];
     expect(filtrar(lista, "quero_assistir")).toEqual([duna]);
     expect(filtrar(lista, "assistido")).toEqual([matrix]);
+  });
+});
+
+describe("desfazer", () => {
+  const chave = ["marcacoes", "u1"];
+
+  it("volta para a lista anterior", () => {
+    const cliente = new QueryClient();
+    const anterior: Marcacao[] = [{ filme: duna, estado: "quero_assistir" }];
+    cliente.setQueryData(chave, [{ filme: matrix, estado: "assistido" }]);
+    desfazer(cliente, chave, anterior);
+    expect(cliente.getQueryData(chave)).toEqual(anterior);
+  });
+
+  it("tira a marcação otimista quando a lista nunca carregou", () => {
+    const cliente = new QueryClient();
+    cliente.setQueryData(chave, [{ filme: matrix, estado: "quero_assistir" }]);
+    desfazer(cliente, chave, undefined);
+    expect(cliente.getQueryData(chave)).toBeUndefined();
   });
 });

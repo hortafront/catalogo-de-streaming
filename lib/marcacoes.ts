@@ -1,3 +1,4 @@
+import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Filme } from "./tipos";
 
 export type Estado = "quero_assistir" | "assistido";
@@ -47,4 +48,16 @@ export function aplicar(lista: Marcacao[], alteracao: Alteracao): Marcacao[] {
 
 export function filtrar(lista: Marcacao[], estado: Estado): Filme[] {
   return lista.filter((item) => item.estado === estado).map((item) => item.filme);
+}
+
+/** Desfaz uma marcação otimista que falhou. */
+export function desfazer(
+  cliente: QueryClient,
+  chave: QueryKey,
+  anterior: Marcacao[] | undefined,
+): void {
+  // setQueryData(chave, undefined) não faz nada: se a lista nunca tinha
+  // carregado, a consulta volta ao estado inicial e busca de novo.
+  if (anterior === undefined) void cliente.resetQueries({ queryKey: chave });
+  else cliente.setQueryData(chave, anterior);
 }
